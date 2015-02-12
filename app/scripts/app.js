@@ -1,7 +1,8 @@
 var bettingApp = angular.module('bettingApp',
   ['ngRoute', 'bettingAppControllers', 'bettingAppFilters', 'bettingAppServices', 'angularMoment']);
 
-var environment = "http://localhost:3000/";
+//var environment = "http://localhost:3000/";
+var environment = "http://voteyourteam.herokuapp.com/";
 
 bettingApp.config(['$routeProvider',
   function($routeProvider) {
