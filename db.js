@@ -69,7 +69,7 @@ exports.dashboardData = function (eid, client, callback) {
 			if(err) {
 		    	callback(null);
 		  	}
-		  	if(result && result.rows.length == 1){
+		  	if(result){
 				data.points = JSON.stringify(result.rows[0].points);
 				var today = moment().format("YYYY-MM-DD");
 				var tomorrow = moment(today).add(1, "days").format("YYYY-MM-DD");
