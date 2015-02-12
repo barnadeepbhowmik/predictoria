@@ -70,7 +70,7 @@ exports.dashboardData = function (eid, client, callback) {
 		    	callback(null);
 		  	}
 		  	if(result){
-				data.points = JSON.stringify(result.rows[0].points);
+				data.points = JSON.stringify(result.rows[0].points) || 0;
 				var today = moment().format("YYYY-MM-DD");
 				var tomorrow = moment(today).add(1, "days").format("YYYY-MM-DD");
 				var query = 'SELECT matchid, teama, teamb, venue, datefield FROM \"Matches\" WHERE datefield = \''+ tomorrow +'\'';
