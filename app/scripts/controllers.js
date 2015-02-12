@@ -26,6 +26,7 @@ bettingAppControllers.controller('LoginController', ['sessionCheck', '$scope', '
 			}
 		})
 		.error(function(result){
+			$scope.loginValidationFail = true;
 			$scope.loginErrMsg = "We are facing network issues at the moment, please try again later!";
 		});
 	};
@@ -58,6 +59,7 @@ bettingAppControllers.controller('RegistrationController', ['sessionCheck', '$sc
 			}
 		})
 		.error(function(result){
+			$scope.registrationValidationFail = true;
 			$scope.registrationErrMsg = "We are facing network issues at the moment, please try again later!";
 		});
 	};
