@@ -3,9 +3,13 @@
   "version": "0.0.1",
   "dependencies": {
     "express": "3.1.x",
-	"pg":"2.8.x",
-	"deepcopy":"x.x",
-	"moment" : "x.x"
+  	"pg":"2.8.x",
+  	"deepcopy":"x.x",
+  	"moment" : "x.x",
+    "angular" : "1.2.x",
+    "angular-route" : "1.2.x",
+    "angular-moment" : "x.x",
+    "bootstrap" : "x.x"
   },
   "engines": {
     "node": "0.10.x"

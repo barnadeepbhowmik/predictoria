@@ -1,0 +1,157 @@
+body {
+	background-color: #000;
+}
+header {
+	background: #000;
+	height: 150px;
+	text-align: center;
+}
+header .page_info {
+    color: #fff;
+    font-size: 30px;
+    position: relative;
+    right: 50px;
+    top: 70px;
+}
+header h2 {
+    color: #FFBF00;
+    margin: 0;
+    position: relative;
+    top: 30px;
+}
+header a {
+    color: #000;
+    background: #FFBF00;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 25px;
+    position: relative;
+    top: 25px;
+}
+header a:hover {
+    background: #FFF;
+    text-decoration: none;
+}
+.pdT30 {
+	padding-top:30px;
+}
+.pdB30 {
+    padding-bottom:30px;
+}
+.mgT50px{
+    margin-top: 50px;
+}
+.mgT35{
+    margin-top: 35px;
+}
+.curvedBox{
+    border-radius: 10px;
+}
+.fltR{
+    float: right;
+}
+.fltL{
+    float: left;
+}
+.grey-background{
+    background: #a9a9a9;
+}
+.from-container{
+    border-radius: 10px;
+}
+.world-cup-img {
+    left: 100px;
+    position: absolute;
+    top: 50px;
+}
+/* Angular related */
+
+/*.ng-invalid .ng-dirty {
+    border: 1px solid red;
+}*/
+
+.error {
+    color: red;
+    display: inline;
+    padding: 10px 0 0 0;
+    font-size: 12px;
+}
+/* home page*/
+#box1 {
+    background-color: #a9a9a9;
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 20px 0 20px 0;
+}
+.match {
+    margin: 20px 0 20px 0px;
+}
+.match > div {
+    text-align: center;
+}
+.match .center-block {
+    margin: 20px 0 0 15px;
+    font-size: 25px;
+    color: #ED7812;
+}
+.vs {
+    margin-top: 50px;
+    font-size: xx-large;
+    color: #041844;
+}
+.flag {
+    border-radius: 50%;
+    height: 180px;
+    width: 180px;
+    margin-left: 10px;
+}
+.match_info {
+    text-align: center;
+    color: #041844;
+    font-size: 16px;
+}
+.btn-bet {
+    background: #ffbf00;
+    color: black;
+    margin-left: 20px;
+}
+#team-A {
+    margin-left: 45px;
+}
+.btn-bet:hover {
+    background: #ED7812;
+    color: black;
+}
+
+/*carousel*/
+.carousel {
+    margin-bottom: 50px;
+}
+.carousel h2 {
+    color: #ffbf00;
+    margin: 30px 0 20px 0;
+    text-align: center;
+}
+h2.brand {
+    color: #ffbf00;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+table {
+    background: #a9a9a9;
+    margin: 25px 0 0 0;
+}
+table, th, td {
+    border: 1px solid #a9a9a9;
+}
+td, th {
+    text-align: center;
+    font-size: 16px;
+    color: #041844;
+    padding: 23px !important;
+}
+h2.upcoming {
+    color: #ffbf00;
+    margin: 20px 0 20px 0;
+    text-align: center;
+}

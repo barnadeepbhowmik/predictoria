@@ -1,0 +1,53 @@
+<header>
+	<img src="app/images/logo_home.png" class="world-cup-img">
+	<span class="page_info"> Login page </span>
+</header>
+<div class="container">
+	<div class="grey-background col-md-12 from-container">
+		<form name="loginform" class="pdT30 col-md-6 col-md-offset-3">
+			<fieldset>
+
+			<!-- Form Name -->
+			<legend class="hide"> Enter Login Info here</legend>
+
+			<div class="form-group col-md-12">
+			  <label class="error" ng-show="loginValidationFail">{{loginErrMsg}}</label>
+			</div>
+			<!-- Text input-->
+			<div class="form-group col-md-12">
+			  <div class="col-md-4"><label class="control-label fltR" for="emp_id">Employee ID</label></div>
+			  <div class="col-md-7">
+			  	<input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="form-control input-md" ng-model="login.emp_id" required />
+			  	<!--start of validation-->
+			  	<span class="error" ng-show="loginform.emp_id.$dirty && loginform.emp_id.$error.required">Required!</span>
+			  	<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Password input-->
+			<div class="form-group col-md-12">
+			  <div class="col-md-4"><label class="control-label fltR" for="emp_password">Password</label></div>
+			  <div class="col-md-7">
+			    <input id="emp_password" name="emp_password" type="password" placeholder="Password" class="form-control input-md" ng-model="login.emp_password" ng-minlength="4" ng-maxlength="50" required/>
+			    <!--start of validation-->
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.required">Required!</span>
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.minlength">Too short!</span>
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.maxlength">Too long!</span>
+			    <!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group col-md-12 pdT30">
+			  <div class="col-md-4 col-md-offset-1">
+			    <button type="submit" id="login" name="login" class="btn btn-lg btn-block btn-success" ng-disabled="loginform.$invalid" ng-click="login()">Login</button>
+			  </div>
+			  <div class="col-md-4 col-md-offset-1">
+			    <a id="register" name="register" class="btn btn-lg btn-block btn-primary" href="#/register">Sign Up</a>
+			  </div>
+			</div>
+
+			</fieldset>
+		</form>
+	</div>
+</div>

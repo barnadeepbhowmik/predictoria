@@ -1,0 +1,140 @@
+var bettingAppControllers = angular.module('bettingAppControllers', ['bettingAppServices']);
+
+bettingAppControllers.controller('LoginController', ['sessionCheck', '$scope', '$http', '$location', function(sessionCheck, $scope, $http, $location) {
+	sessionCheck();
+	$scope.loginValidationFail = false;
+	$scope.loginErrMsg = "";
+
+	$scope.login = function(){
+		var payload = {
+			"eid" : $scope.login.emp_id,
+			"password" : $scope.login.emp_password
+		};
+		$http.post(environment+"letMeBet",payload)
+		.success(function(result){
+			if(result.success == true){
+				sessionStorage.username = result.results[0].username.replace(/"/g, "");
+				sessionStorage.employeeId = $scope.login.emp_id.replace(/"/g, "");
+				$location.path("/dashboard");
+			}else{
+				$scope.loginValidationFail = true;
+				if(result.errmsg != null || result.errmsg != "" ){
+					$scope.loginErrMsg = result.errmsg;
+				}else{
+					$scope.loginErrMsg = "Please check the credentials and try again!";
+				}
+			}
+		})
+		.error(function(result){
+			$scope.loginErrMsg = "We are facing network issues at the moment, please try again later!";
+		});
+	};
+}]);
+
+bettingAppControllers.controller('RegistrationController', ['sessionCheck', '$scope', '$http', '$location', function(sessionCheck, $scope, $http, $location) {
+	sessionCheck();
+	$scope.registrationValidationFail = false;
+	$scope.registrationErrMsg = "";
+
+	$scope.register = function(){
+		var payload = {
+			"eid" : $scope.register.emp_id,
+			"username" : $scope.register.user_name,
+			"password" : $scope.register.emp_password
+		};
+		$http.post(environment+"makeMeAGambler",payload)
+		.success(function(result){
+			if(result.success == true){
+				sessionStorage.username = $scope.register.user_name.replace(/"/g, "");
+				sessionStorage.employeeId = $scope.register.emp_id.replace(/"/g, "");
+				$location.path("/dashboard");
+			}else{
+				$scope.registrationValidationFail = true;
+				if(result.errmsg != null || result.errmsg != "" ){
+					$scope.registrationErrMsg = result.errmsg;
+				}else{
+					$scope.registrationErrMsg = "We were unable to sign you up! Please try again.";
+				}
+			}
+		})
+		.error(function(result){
+			$scope.registrationErrMsg = "We are facing network issues at the moment, please try again later!";
+		});
+	};
+}]);
+
+bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope', '$http', '$location', function(sessionCheck, $scope, $http, $location) {
+	sessionCheck();
+	$scope.username = sessionStorage.username;
+	if(sessionStorage.points >= 0){
+		$scope.points = sessionStorage.points;
+	}
+	$http.post(environment+"leaderBoard")
+	.success(function(result){
+		if(result.success == true){
+			$scope.leaders = JSON.parse(result.results);
+		}else{
+			$scope.leaderboardFail = true;
+			if(result.errmsg != null || result.errmsg != "" ){
+				$scope.leaderboardErrMsg = result.errmsg;
+			}else{
+				$scope.leaderboardErrMsg = "We were unable to fetch the leader-board due to network issues";
+			}
+		}
+	})
+	.error(function(result){
+		$scope.leaderboardErrMsg = "Unable to fetch the leader-board due to network issues!";
+	});
+
+	var payload = {
+		"eid" : sessionStorage.employeeId
+	};
+	$http.post(environment+"getDashboardData", payload)
+	.success(function(result){
+		if(result.success == true){
+			$scope.points = result.results.points.replace(/"/g, "");
+			sessionStorage.points = angular.copy($scope.points);
+			$scope.matches = result.results.matches;
+		}else{
+			$scope.dashboardDataFail = true;
+			if(result.errmsg != null || result.errmsg != "" ){
+				$scope.dashboardErrMsg = result.errmsg;
+			}else{
+				$scope.dashboardErrMsg = "We were unable to connect to database due to network issues.";
+			}
+		}
+	})
+	.error(function(result){
+		$scope.dashboardErrMsg = "We were unable to connect to database due to network issues!";
+	});
+
+	$scope.bet = function(matchId, teamID){
+		var payload = {
+			"eid" : sessionStorage.employeeId,
+			"matchId" : matchId,
+			"teamId" : teamID
+		};
+		$http.post(environment+"saveMyBet", payload)
+		.success(function(result){
+			if(result.success == true){
+				$scope.saveFailStatus = false;
+			}else{
+				$scope.saveFailStatus = true;
+				if(result.errmsg != null || result.errmsg != "" ){
+					$scope.saveErrMsg = result.errmsg;
+				}else{
+					$scope.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
+				}
+			}
+		})
+		.error(function(result){
+			$scope.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
+		});
+	};
+
+	$scope.logout = function(){
+		sessionStorage.clear();
+		$location.path("/login");
+	};
+
+}]);

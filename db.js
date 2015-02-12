@@ -72,7 +72,8 @@ exports.dashboardData = function (eid, client, callback) {
 		  	if(result && result.rows.length == 1){
 				data.points = JSON.stringify(result.rows[0].points);
 				var today = moment().format("YYYY-MM-DD");
-				var query = 'SELECT matchid, teama, teamb, venue, datefield FROM \"Matches\" WHERE datefield = \''+ today +'\'';
+				var tomorrow = moment(today).add(1, "days").format("YYYY-MM-DD");
+				var query = 'SELECT matchid, teama, teamb, venue, datefield FROM \"Matches\" WHERE datefield = \''+ tomorrow +'\'';
 				client.query(query, function(err, result)
 				  {
 				    if(result && result.rows.length >= 1){
@@ -174,7 +175,8 @@ exports.getLeaderBoard = function (client, callback) {
 	  if(err) {
 	    callback(null);
 	  }
-	  var query = 'SELECT sum(points) AS pts , eid FROM "Points" GROUP BY eid ORDER BY pts DESC LIMIT 5';
+	  //var query = 'SELECT sum(points) AS pts , eid FROM "Points" GROUP BY eid ORDER BY pts DESC LIMIT 5';
+	  var query = 'SELECT "Employees".username, sum("Points".points) AS pts , "Points".eid FROM "Employees", "Points" WHERE  "Employees".username IN (SELECT "Employees".username FROM "Employees" WHERE "Employees".eid="Points".eid) GROUP BY "Employees".username, "Points".eid ORDER BY pts DESC LIMIT 5';
 	  client.query(query, function(err, result)
 	  {
 	    if(err) {

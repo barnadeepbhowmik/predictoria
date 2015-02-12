@@ -46,8 +46,6 @@ var returnObj = {
 };
 
 app.post('/testPost', function(request, response){
-	console.log('reaches post service');
-	console.log(request.body);
 	response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
 	response.json({'status':'success'});
 
@@ -117,7 +115,6 @@ app.post('/saveMyBet', function(request, response){
 	var req = request.body;
 
 	lib.checkBet(req.eid, req.matchId, req.teamId, client, function(betPresent){
-		console.log("betPresent "+ betPresent);
 		if(betPresent == null){
 			var myRetObj = deepcopy(returnObj);
 			myRetObj.success = false;
