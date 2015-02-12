@@ -1,4 +1,4 @@
-var bettingAppControllers = angular.module('bettingAppControllers', ['bettingAppServices']);
+var bettingAppControllers = angular.module('bettingAppControllers', ['bettingAppServices', 'bettingAppFilters']);
 
 bettingAppControllers.controller('LoginController', ['sessionCheck', '$scope', '$http', '$location', function(sessionCheck, $scope, $http, $location) {
 	sessionCheck();
@@ -63,7 +63,7 @@ bettingAppControllers.controller('RegistrationController', ['sessionCheck', '$sc
 	};
 }]);
 
-bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope', '$http', '$location', function(sessionCheck, $scope, $http, $location) {
+bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope', '$http', '$location', '$filter', function(sessionCheck, $scope, $http, $location, $filter) {
 	sessionCheck();
 	$scope.username = sessionStorage.username;
 	if(sessionStorage.points >= 0){
@@ -108,27 +108,32 @@ bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope
 		$scope.dashboardErrMsg = "We were unable to connect to database due to network issues!";
 	});
 
-	$scope.bet = function(matchId, teamID){
+	$scope.bet = function(match, matchId, teamID){
 		var payload = {
 			"eid" : sessionStorage.employeeId,
-			"matchId" : matchId,
-			"teamId" : teamID
+			"matchId" : $filter('replaceQuotes')(matchId),
+			"teamId" : $filter('replaceQuotes')(teamID)
 		};
+		match.bet = $filter('replaceQuotes')(teamID);
 		$http.post(environment+"saveMyBet", payload)
 		.success(function(result){
 			if(result.success == true){
-				$scope.saveFailStatus = false;
+				match.betSaved = true;
+				match.betFailed = false;
 			}else{
-				$scope.saveFailStatus = true;
+				match.betFailed = true;
+				match.betSaved = false;
 				if(result.errmsg != null || result.errmsg != "" ){
-					$scope.saveErrMsg = result.errmsg;
+					match.saveErrMsg = result.errmsg;
 				}else{
-					$scope.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
+					match.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
 				}
 			}
 		})
 		.error(function(result){
-			$scope.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
+			match.betFailed = true;
+			match.betSaved = false;
+			match.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
 		});
 	};
 
