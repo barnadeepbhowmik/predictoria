@@ -193,6 +193,9 @@ h2.upcoming {
     border-bottom: 1px dotted #ccc !important;
     margin-bottom: 50px;
 }
+.white-text{
+    color: #FFFFFF;
+}
 .transparent {
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
     filter: alpha(opacity=90);
