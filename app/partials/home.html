@@ -1,28 +1,26 @@
-<header class="row">
-	<img src="app/images/logo_home.png" class="col-md-2">
-	<h2 class="col-md-4">Welcome, {{username | capitalizeFirst}}</h2>
-	<h2 class="col-md-3">Points : {{points}}</h2>
-	<div class="col-md-3">
-		<button type="" id="logoutBtn" name="logoutBtn" class="btn btn-danger btn-sm mgT35" ng-click="logout()">Logout</button>
+<header class="container">
+	<img src="app/images/logo_home.png" class="fltL"/>
+	<div class="user">
+	<span >Welcome, {{username | capitalizeFirst}}</span>
+	<!--<h2 class="col-md-3">Points : {{points}}</h2>-->
+	<button type="" id="logoutBtn" name="logoutBtn" class="btn btn-danger btn-md mgt20 fltR" ng-click="logout()">Logout</button>
 	</div>
-</header>
-
-<div class="container">
+</header><div class="container bg-3 pdT30 pdB30">
 	<div class="row">
 		<div class="col-md-8">
 			<div class="col-md-12">
-				<h2 class="brand"> Today's Matches </h2>
-				<div id="" class="grey-background mgT50px pdT30 pdB30 curvedBox" ng-repeat="match in matches">
+				<h1 class="mainbrand"> Today's Matches </h1>
+				<div id="" class="grey-background mgT50px pdT30 pdB30 curvedBox transparent" ng-repeat="match in matches">
 					<div class="col-md-12">
 						<label ng-show="match.betSaved">Your vote for {{match.bet}} has been successfully saved.</label>
 				  		<label ng-show="match.betFailed">Your vote for {{match.bet}} could not be saved at the moment. Please try again later.</label>
 				  	</div>
 					<div class="row">
 						<div class="col-md-4">
-							<button id="team-A" name="team-A" class="btn btn-lg btn-block btn-bet" ng-click="bet(match, match.matchid, match.teama)">Vote for {{match.teama | replaceQuotes}}</button>
+							<button id="team-A" name="team-A" class="btn btn-md btn-block btn-bet fnt-bold" ng-click="bet(match, match.matchid, match.teama)">Vote for {{match.teama | replaceQuotes}}</button>
 						</div>
 						<div class="col-md-4 col-md-offset-3">
-							<button id="team-B" name="team-B" class="btn btn-lg btn-block btn-bet" ng-click="bet(match, match.matchid, match.teamb)">Vote for {{match.teamb | replaceQuotes}}</button>
+							<button id="team-B" name="team-B" class="btn btn-md btn-block btn-bet fnt-bold" ng-click="bet(match, match.matchid, match.teamb)">Vote for {{match.teamb | replaceQuotes}}</button>
 						</div>
 					</div>
 	                <div class="row match">
@@ -47,18 +45,21 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="col-md-12">
-				<h2 class="brand">Leaderboard</h2>
-				<table class="table table-bordered">
-					<tr>
+			<div class="col-md-12 bet-points dashed-bottom-border">
+				<h2 class="brand">Total Score : <span class="fltR">{{points}} points</span></h2>
+			</div>
+			<div class="col-md-12 bet-points">
+				<h2 class="brand">Most Bet Points Won</h2>
+				<table>
+					<!--<tr>
 						<th>Employee Id</th>
 						<th>Name</th>
 						<th>Points</th>
-					</tr>
+					</tr>-->
 					<tr ng-repeat="leader in leaders">
-						<td>{{leader.eid}}</td>
-						<td>{{leader.username}}</td>
-						<td>{{leader.pts}}</td>
+						<!--<td class="col-md-4">{{leader.eid}}</td>-->
+						<td class="col-md-6">{{leader.username}}</td>
+						<td class="col-md-2">{{leader.pts}} points</td>
 					</tr>
 				</table>
 			</div>
