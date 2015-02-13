@@ -94,19 +94,32 @@ app.post('/makeMeAGambler', function(request, response){
 app.post('/getDashboardData', function(request, response){
 	var client = new pg.Client(conString);
 	var req = request.body;
-	lib.dashboardData(req.eid, client, function(data){
+	var data = {
+		"points" : 0,
+		"matches" : []
+	};
+	lib.getPoints(req.eid, client, function(points){
 		var myRetObj = deepcopy(returnObj);
-		if(data){
-			myRetObj.success = true;
-			myRetObj.results = data;
+		if(points){
+			data.points = points;
 		}else{
 			myRetObj.success = false;
 			myRetObj.errmsg = "Sorry, we are facing network issues, please try later!";
 		}
-		response.setHeader('Access-Control-Allow-Origin', "*");
-		response.setHeader('Content-Type', "application/json");
-		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-		response.end(JSON.stringify(myRetObj));
+		lib.matchesForBetting(req.eid, new pg.Client(conString), function(matches){
+			if(matches){
+				data.matches = matches;
+				myRetObj.success = true;
+			}else{
+				myRetObj.success = false;
+				myRetObj.errmsg = "Sorry, we are facing network issues, please try later!";
+			}
+			myRetObj.results = data;
+			response.setHeader('Access-Control-Allow-Origin', "*");
+			response.setHeader('Content-Type', "application/json");
+			response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+			response.end(JSON.stringify(myRetObj));
+		});
 	});
 });
 

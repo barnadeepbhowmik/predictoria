@@ -54,53 +54,76 @@ exports.registerMe = function (username, employeeid, password, client, callback)
 };
 
 
-exports.dashboardData = function (eid, client, callback) {
-	var data = {
-		"points" : 0,
-		"matches" : []
-	};
+exports.getPoints = function (eid, client, callback) {
     client.connect(function(err)
 	{
 	    if(err) {
 	      callback(null);
 	    }
-	    var queryPoints = "SELECT sum(points) AS points FROM \"Points\" WHERE eid = "+eid;
-	    client.query(queryPoints, function(err, result){
-			if(err) {
-		    	callback(null);
-		  	}
-		  	if(result){
-				data.points = JSON.stringify(result.rows[0].points) || 0;
-				var today = moment().format("YYYY-MM-DD");
-				var tomorrow = moment(today).add(1, "days").format("YYYY-MM-DD");
-				var query = 'SELECT matchid, teama, teamb, venue, datefield FROM \"Matches\" WHERE datefield = \''+ tomorrow +'\'';
-				client.query(query, function(err, result)
-				  {
-				    if(result && result.rows.length >= 1){
-				    	for(i in result.rows){
-							var match = {
-								"matchid" : 0,
-								"teama" : "",
-								"teamb" : "",
-								"venue" : "",
-								"datefield" : ""
-							};
-					    	match.matchid = JSON.stringify(result.rows[i].matchid);
-					    	match.teama = JSON.stringify(result.rows[i].teama);
-					    	match.teamb = JSON.stringify(result.rows[i].teamb);
-					    	match.venue = JSON.stringify(result.rows[i].venue);
-					    	match.datefield = JSON.stringify(result.rows[i].datefield);
-					    	data.matches.push(match);
-				    	}
-				    }
-				    callback(data);
-			      });
-		  	}
-    		client.end();
-  		});
+	    else{
+	    	var points = null;
+		    var queryPoints = "SELECT sum(points) AS points FROM \"Points\" WHERE eid = "+eid;
+		    client.query(queryPoints, function(err, result){
+				if(err) {
+			    	callback("0");
+			  	}
+			  	else if(result && result.rows.length >=1 ){
+					points = JSON.stringify(result.rows[0].points);
+					if(points == null || points == "null"){
+						points = 0;
+					}
+					callback(points);
+			  	}
+			  	else{
+			  		callback("0");
+			  	}
+	    		client.end();
+	  		});
+	    }
+	});
+};
+
+exports.matchesForBetting = function (eid, client, callback) {
+    var matches = [];
+    client.connect(function(err)
+	{
+	    if(err) {
+	      	callback(matches);
+			client.end();
+	    }else{
+		    var today = moment().format("YYYY-MM-DD");
+			var tomorrow = moment(today).add(1, "days").format("YYYY-MM-DD");
+			var query = 'SELECT matchid, teama, teamb, venue, datefield FROM \"Matches\" WHERE datefield = \''+ tomorrow +'\'';
+			client.query(query, function(err, result)
+			  {
+			  	if(err){
+			  		matches = [];
+			  	}
+			    else if(result && result.rows.length >= 1){
+			    	for(i in result.rows){
+						var match = {
+							"matchid" : 0,
+							"teama" : "",
+							"teamb" : "",
+							"venue" : "",
+							"datefield" : ""
+						};
+				    	match.matchid = JSON.stringify(result.rows[i].matchid);
+				    	match.teama = JSON.stringify(result.rows[i].teama);
+				    	match.teamb = JSON.stringify(result.rows[i].teamb);
+				    	match.venue = JSON.stringify(result.rows[i].venue);
+				    	match.datefield = JSON.stringify(result.rows[i].datefield);
+				    	matches.push(match);
+			    	}
+			    }
+			    callback(matches);
+			    client.end();
+		      });
+	    }
 
 	});
 };
+
 
 exports.checkBet = function (employeeid, matchId, teamId, client, callback) {
 	var betPresent = false;
