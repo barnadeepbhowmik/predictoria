@@ -10,8 +10,8 @@ var express = require('express'),
  //Congifure eXxpress
 var app = express();
 
-//var conString = "postgres://riwxxeiaahuzre:OuG5IAooAA-s2PmfQteEKaa1QR@ec2-54-204-27-32.compute-1.amazonaws.com:5432/d42bb4af96j205";
-var conString = "postgres://postgres:postgres@localhost:5432/postgres";
+var conString = "postgres://riwxxeiaahuzre:OuG5IAooAA-s2PmfQteEKaa1QR@ec2-54-204-27-32.compute-1.amazonaws.com:5432/d42bb4af96j205";
+//var conString = "postgres://postgres:postgres@localhost:5432/postgres";
 
 var connection = new pg.Client(conString);
 
