@@ -94,7 +94,7 @@ bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope
 	$http.post(environment+"getDashboardData", payload)
 	.success(function(result){
 		if(result.success == true){
-			$scope.points = result.results.points.replace(/"/g, "");
+			$scope.points = result.results.points.toString().replace(/"/g, "");
 			sessionStorage.points = angular.copy($scope.points);
 			$scope.matches = result.results.matches;
 		}else{
