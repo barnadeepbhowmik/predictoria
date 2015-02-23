@@ -44,6 +44,12 @@ header a:hover {
 .mgT35{
     margin-top: 35px;
 }
+.mgT40{
+    margin-top: 40px;
+}
+.mgR50{
+    margin-right: 50px;
+}
 .curvedBox{
     border-radius: 10px;
 }
@@ -53,7 +59,9 @@ header a:hover {
 .fltL{
     float: left;
 }
-
+.mgR15{
+    margin-right: 15px;
+}
 .world-cup-img {
     left: 100px;
     position: absolute;
@@ -66,7 +74,7 @@ header a:hover {
 }*/
 
 .error {
-    color: red;
+    color: red !important;
     display: inline;
     padding: 10px 0 0 0;
     font-size: 12px;
@@ -193,8 +201,14 @@ h2.upcoming {
     border-bottom: 1px dotted #ccc !important;
     margin-bottom: 50px;
 }
-.white-text{
+.white-text, .white-text:hover, .white-text:visited,  .white-text:focus{
     color: #FFFFFF;
+}
+.smallText{
+    font-size: 14px;
+}
+.mediumText{
+    font-size: 18px;
 }
 .transparent {
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
@@ -202,4 +216,93 @@ h2.upcoming {
     -moz-opacity:0.9;
     -khtml-opacity: 0.9;
     opacity: 0.9;
+}
+
+.pdR0{
+    padding-right: 0px;
+}
+.pdR5{
+    padding-right: 5px;
+}
+
+.pdL0{
+    padding-left: 0px;
+}
+
+.pdR10{
+    padding-right: 10px;
+}
+
+.mgT15{
+    margin-top: 15px;
+}
+.mg-10{
+    margin-top: -10px;
+}
+.transparentText{
+    opacity: 0.3;
+}
+
+
+.voteImg{
+    padding: 5px;
+    background: rgba(252,234,187,1);
+    background: -moz-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(252,234,187,1)), color-stop(51%, rgba(248,181,0,1)), color-stop(68%, rgba(252,205,77,1)), color-stop(100%, rgba(251,223,147,1)));
+    background: -webkit-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -o-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -ms-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: linear-gradient(to right, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93', GradientType=1 );
+    cursor: pointer;
+}
+
+.customTableRow{
+    color: #fff;
+    text-align: left;
+}
+
+.customTableCell{
+     -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-bottom: 1px dotted #ccc !important;
+    border-image: none;
+    border-left: medium none;
+    border-right: medium none;
+    border-top: medium none;
+    padding: 5px;
+}
+
+
+@media (max-device-width : 700px) {
+/* Styles */
+    .hideMobile{
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .welcomeText{
+        position: absolute;
+        right: 0px;
+    }
+
+    .bg-3{
+        background: url(../images/icc-wallpaper.png);
+    }
+    header{
+        max-height: 100px;
+    }
+    .infoMsg{
+        position: absolute;
+        top: 20px;
+    }
+}
+
+@media (min-width: 700px) {
+    .hideDesktop{
+        display: none !important;
+        visibility: hidden !important;
+    }
 }

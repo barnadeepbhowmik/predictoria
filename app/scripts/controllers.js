@@ -67,6 +67,17 @@ bettingAppControllers.controller('RegistrationController', ['sessionCheck', '$sc
 
 bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope', '$http', '$location', '$filter', function(sessionCheck, $scope, $http, $location, $filter) {
 	sessionCheck();
+
+    $scope.setTab = function(newValue){
+      $scope.tab = newValue;
+    };
+
+    $scope.isSet = function(tabName){
+      return $scope.tab === tabName;
+    };
+
+    $scope.tab = 1;
+
 	$scope.username = sessionStorage.username;
 	if(sessionStorage.points >= 0){
 		$scope.points = sessionStorage.points;
@@ -86,6 +97,27 @@ bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope
 	})
 	.error(function(result){
 		$scope.leaderboardErrMsg = "Unable to fetch the leader-board due to network issues!";
+	});
+
+	$scope.upcomingMatches = [];
+
+	$http.post(environment+"upcomingMatches")
+	.success(function(result){
+		if(result.success == true){
+			$scope.upcomingMatchesListFail = false;
+			$scope.upcomingMatches = JSON.parse(result.results);
+		}else{
+			$scope.upcomingMatchesListFail = true;
+			if(result.errmsg != null || result.errmsg != "" ){
+				$scope.upcomingMatchesErrMsg = result.errmsg;
+			}else{
+				$scope.upcomingMatchesErrMsg = "We were unable to fetch the list of upcoming matches due to network issues!";
+			}
+		}
+	})
+	.error(function(result){
+		$scope.upcomingMatchesListFail = true;
+		$scope.upcomingMatchesErrMsg = "We were unable to fetch the list of upcoming matches due to network issues!";
 	});
 
 	var payload = {
@@ -110,7 +142,17 @@ bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope
 		$scope.dashboardErrMsg = "We were unable to connect to database due to network issues!";
 	});
 
-	$scope.bet = function(match, matchId, teamID){
+	$scope.findPos = function(obj) {
+	    var curtop = 0;
+	    if (obj.offsetParent) {
+	        do {
+	            curtop += obj.offsetTop;
+	        } while (obj = obj.offsetParent);
+	    return [curtop];
+	    }
+	};
+	$scope.bet = function(event, match, matchId, teamID){
+		var element = angular.element(event.target).parent().parent().parent();
 		var payload = {
 			"eid" : sessionStorage.employeeId,
 			"matchId" : $filter('replaceQuotes')(matchId),
@@ -131,11 +173,13 @@ bettingAppControllers.controller('DashboardController', ['sessionCheck', '$scope
 					match.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
 				}
 			}
+			window.scroll(0, $scope.findPos(element[0]));
 		})
 		.error(function(result){
 			match.betFailed = true;
 			match.betSaved = false;
 			match.saveErrMsg = "We were unable to save your choice due to network issues! Please try again later.";
+			window.scroll(0, $scope.findPos(element[0]));
 		});
 	};
 

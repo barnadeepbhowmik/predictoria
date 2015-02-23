@@ -31,6 +31,30 @@ exports.checkCreds = function (employeeid, password, client, callback) {
 	});
 };
 
+exports.checkAccount = function (employeeid, client, callback) {
+	var userAlreadyRegistered = false;
+    client.connect(function(err)
+	{
+	  if(err) {
+	    callback(userAlreadyRegistered);
+	  }
+	  var query = 'SELECT * FROM "Employees" WHERE eid='+ employeeid;
+	  client.query(query, function(err, result)
+	  {
+	    if(err) {
+	    	callback(false);
+	  	}
+	    else if(result && result.rows.length>=1){
+			userAlreadyRegistered = true;
+			callback(userAlreadyRegistered);
+	    }else{
+	    	callback(userAlreadyRegistered);
+	    }
+	  	client.end();
+	  });
+	});
+};
+
 exports.registerMe = function (username, employeeid, password, client, callback) {
 	var userIsRegistered = false;
     client.connect(function(err)
@@ -211,5 +235,113 @@ exports.getLeaderBoard = function (client, callback) {
 	  	client.end();
   		callback(leaderBoard);
 	  });
+	});
+};
+
+exports.getNextMatches = function (client, callback) {
+	var matches = false;
+    client.connect(function(err)
+	{
+	  if(err) {
+	    callback(null);
+	  }
+	  var startDate = moment().format("YYYY-MM-DD");
+	  startDate = moment(startDate).add(1, "days").format("YYYY-MM-DD");
+	  var endDate = moment(startDate).add(6, "days").format("YYYY-MM-DD");
+	  var query = 'SELECT * FROM "Matches" WHERE datefield>\'' + startDate + '\' AND datefield<\'' + endDate + '\' ORDER BY datefield ASC;';
+	  client.query(query, function(err, result)
+	  {
+	    if(err) {
+	    	callback(null);
+	  	}
+	    if(result && result.rows.length>=1){
+			matches = JSON.stringify(result.rows);
+	    }
+	  	client.end();
+  		callback(matches);
+	  });
+	});
+};
+
+exports.getPlayedMatches = function (client, date, callback) {
+    var matches = [];
+    client.connect(function(err)
+	{
+	    if(err) {
+	      	callback(matches);
+			client.end();
+	    }else{
+	    	var query = "";
+	    	if(date != null){
+	    		query = "SELECT * FROM \"Matches\" WHERE datefield='"+ moment(date).format("YYYY-MM-DD") +"'";
+	    	}else{
+			    var today = moment().format("YYYY-MM-DD");
+				query = "SELECT * FROM \"Matches\" WHERE datefield='"+ today +"'";
+	    	}
+			client.query(query, function(err, result)
+			  {
+			  	if(err){
+			  		matches = [];
+			  	}
+			    else if(result && result.rows.length >= 1){
+			    	for(i in result.rows){
+			    		matches.push(result.rows[i]);
+			    	}
+			    }
+			    callback(matches);
+			    client.end();
+		      });
+	    }
+
+	});
+};
+
+exports.updateMatchWinner = function (client, matchid, winner, callback) {
+    var resultUpdated = false;
+    client.connect(function(err)
+	{
+	    if(err) {
+	      	callback(resultUpdated);
+			client.end();
+	    }else{
+	    	var query = "UPDATE \"Matches\" SET winner='"+ winner +"' WHERE matchid="+matchid;
+			client.query(query, function(err, result)
+			  {
+			  	if(err){
+			  		resultUpdated = false;
+			  	}
+			    else if(result){
+			    	resultUpdated = true;
+			    }
+			    callback(resultUpdated);
+			    client.end();
+		      });
+	    }
+
+	});
+};
+
+exports.calculatePoints = function (client, matchid, choice, callback) {
+    var resultUpdated = false;
+    client.connect(function(err)
+	{
+	    if(err) {
+	      	callback(resultUpdated);
+			client.end();
+	    }else{
+	    	var query = "UPDATE \"Points\" SET points=10  WHERE matchid='"+ matchid +"' AND choice='"+ choice +"'";
+			client.query(query, function(err, result)
+			  {
+			  	if(err){
+			  		resultUpdated = false;
+			  	}
+			    else if(result){
+			    	resultUpdated = true;
+			    }
+			    callback(resultUpdated);
+			    client.end();
+		      });
+	    }
+
 	});
 };

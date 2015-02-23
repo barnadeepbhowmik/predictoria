@@ -10,8 +10,8 @@ var express = require('express'),
  //Congifure eXxpress
 var app = express();
 
-var conString = "postgres://riwxxeiaahuzre:OuG5IAooAA-s2PmfQteEKaa1QR@ec2-54-204-27-32.compute-1.amazonaws.com:5432/d42bb4af96j205";
-//var conString = "postgres://postgres:postgres@localhost:5432/postgres";
+//var conString = "postgres://riwxxeiaahuzre:OuG5IAooAA-s2PmfQteEKaa1QR@ec2-54-204-27-32.compute-1.amazonaws.com:5432/d42bb4af96j205";
+var conString = "postgres://postgres:postgres@localhost:5432/postgres";
 
 var connection = new pg.Client(conString);
 
@@ -76,19 +76,32 @@ app.post('/letMeBet', function(request, response){
 app.post('/makeMeAGambler', function(request, response){
 	var client = new pg.Client(conString);
 	var req = request.body;
-	lib.registerMe(req.username, req.eid, req.password, client, function(userIsRegistered){
+	lib.checkAccount(req.eid, client, function(userAlreadyRegistered){
 		var myRetObj = deepcopy(returnObj);
-		if(userIsRegistered){
-			myRetObj.success = true;
+		if(!userAlreadyRegistered){
+			lib.registerMe(req.username, req.eid, req.password, new pg.Client(conString), function(userIsRegistered){
+				if(userIsRegistered){
+					myRetObj.success = true;
+				}else{
+					myRetObj.success = false;
+					myRetObj.errmsg = "Sorry, employee already registered or database is down at the moment, please try later!";
+				}
+				response.setHeader('Access-Control-Allow-Origin', "*");
+				response.setHeader('Content-Type', "application/json");
+				response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+				response.end(JSON.stringify(myRetObj));
+			});
 		}else{
 			myRetObj.success = false;
-			myRetObj.errmsg = "Sorry, employee already registered or database is down at the moment, please try later!";
+			myRetObj.errmsg = "Sorry, employee already registered! If you are the righful owner, please contact the admin.";
+			response.setHeader('Access-Control-Allow-Origin', "*");
+			response.setHeader('Content-Type', "application/json");
+			response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+			response.end(JSON.stringify(myRetObj));
 		}
-		response.setHeader('Access-Control-Allow-Origin', "*");
-		response.setHeader('Content-Type', "application/json");
-		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-		response.end(JSON.stringify(myRetObj));
 	});
+
+	
 });
 
 app.post('/getDashboardData', function(request, response){
@@ -180,6 +193,87 @@ app.post('/leaderBoard', function(request, response){
 		}else{
 			myRetObj.success = false;
 			myRetObj.errmsg = "Sorry, we were unable to fetch the leaderBoard, please try later!";
+		}
+		response.setHeader('Access-Control-Allow-Origin', "*");
+		response.setHeader('Content-Type', "application/json");
+		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+		response.end(JSON.stringify(myRetObj));
+	});
+});
+
+app.post('/upcomingMatches', function(request, response){
+	var client = new pg.Client(conString);
+	var req = request.body;
+	lib.getNextMatches(client, function(data){
+		var myRetObj = deepcopy(returnObj);
+		if(data){
+			myRetObj.success = true;
+			myRetObj.results = data;
+		}else{
+			myRetObj.success = false;
+			myRetObj.errmsg = "Sorry, we were unable to fetch the list of upcoming matches, apologies for the inconvinience caused!";
+		}
+		response.setHeader('Access-Control-Allow-Origin', "*");
+		response.setHeader('Content-Type', "application/json");
+		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+		response.end(JSON.stringify(myRetObj));
+	});
+});
+
+app.post('/getPlayedMatches', function(request, response){
+	var client = new pg.Client(conString);
+	var req = request.body;
+	var date = null;
+	if(req.date){
+		date = req.date;
+	}
+	lib.getPlayedMatches(client, date, function(data){
+		var myRetObj = deepcopy(returnObj);
+		if(data){
+			myRetObj.success = true;
+			myRetObj.results = data;
+		}else{
+			myRetObj.success = false;
+			myRetObj.errmsg = "Sorry, we were unable to fetch matches, please try later!";
+		}
+		response.setHeader('Access-Control-Allow-Origin', "*");
+		response.setHeader('Content-Type', "application/json");
+		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+		response.end(JSON.stringify(myRetObj));
+	});
+});
+
+app.post('/updateResult', function(request, response){
+	var client = new pg.Client(conString);
+	var req = request.body;
+	lib.updateMatchWinner(client, req.matchid, req.winner, function(data){
+		var myRetObj = deepcopy(returnObj);
+		if(data){
+			myRetObj.success = true;
+			myRetObj.results = data;
+		}else{
+			myRetObj.success = false;
+			myRetObj.errmsg = "Sorry, we were unable to update matche results, please try later!";
+		}
+		response.setHeader('Access-Control-Allow-Origin', "*");
+		response.setHeader('Content-Type', "application/json");
+		response.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+		response.end(JSON.stringify(myRetObj));
+	});
+});
+
+
+app.post('/calculatePoints', function(request, response){
+	var client = new pg.Client(conString);
+	var req = request.body;
+	lib.calculatePoints(client, req.matchid, req.choice, function(data){
+		var myRetObj = deepcopy(returnObj);
+		if(data){
+			myRetObj.success = true;
+			myRetObj.results = data;
+		}else{
+			myRetObj.success = false;
+			myRetObj.errmsg = "Sorry, we were unable to update matche results, please try later!";
 		}
 		response.setHeader('Access-Control-Allow-Origin', "*");
 		response.setHeader('Content-Type', "application/json");
