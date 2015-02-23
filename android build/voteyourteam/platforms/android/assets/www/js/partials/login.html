@@ -1,0 +1,50 @@
+<div class="container bg">
+	<div class="grey-background col-xs-12 mgR15 from-container transparent">
+	    <h1 class="page_info"> PredictoRIA </h1>
+		<form name="loginform">
+			<fieldset>
+
+			<!-- Form Name -->
+			<legend class="hide"> Enter Login Info here</legend>
+
+			<div class="form-group">
+			  <label class="error" ng-show="loginValidationFail">{{loginErrMsg}}</label>
+			</div>
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="control-label pad-top-8" for="emp_id">Employee ID</label>
+			  <div>
+			  	<input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="form-control input-md" ng-model="login.emp_id" required />
+			  	<!--start of validation-->
+			  	<span class="error" ng-show="loginform.emp_id.$dirty && loginform.emp_id.$error.required">Required!</span>
+			  	<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Password input-->
+			<div class="form-group">
+			  <div><label class="control-label pad-top-8" for="emp_password">Password</label></div>
+			  <div>
+			    <input id="emp_password" name="emp_password" type="password" placeholder="Password" class="form-control input-md" ng-model="login.emp_password" ng-minlength="4" ng-maxlength="50" required/>
+			    <!--start of validation-->
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.required">Required!</span>
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.minlength">Too short!</span>
+			    <span class="error" ng-show="loginform.emp_password.$dirty && loginform.emp_password.$error.maxlength">Too long!</span>
+			    <!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group btn-area">
+
+			    <button type="submit" id="login" name="login" class="btn btn-md btn-block" ng-disabled="loginform.$invalid" ng-click="login()">Login</button>
+			    <p class="register">
+			    <span>Don't have an account?</span>
+			    <a id="register" name="register" class="" href="#/register">Sign Up</a>
+			    </p>
+			</div>
+
+			</fieldset>
+		</form>
+	</div>
+</div>

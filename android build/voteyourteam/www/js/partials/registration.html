@@ -1,0 +1,74 @@
+<div class="container bg">
+	<div class="grey-background col-xs-12 mgR15 from-container p-bottom20 transparent">
+	<h1>Registration</h1>
+		<form name="registerform" class="">
+			<fieldset>
+
+			<!-- Form Name -->
+			<legend class="hide"> Enter Registration Info here</legend>
+
+			<div class="form-group col-md-12">
+			  <label class="error" ng-show="registrationValidationFail">{{registrationErrMsg}}</label>
+			</div>
+
+			<!-- Text input-->
+			<div>
+			  <div><label class="control-label pad-top-8" for="user_name">Username</label></div>
+			  <div>
+			  	<input id="user_name" name="user_name" type="text" placeholder="Username" class="form-control input-md" ng-model="register.user_name" ng-minlength="3" ng-maxlength="50" required />
+			  	<!--start of validation-->
+				<span class="error" ng-show="registerform.user_name.$dirty && registerform.user_name.$error.required">Required!</span>
+				<span class="error" ng-show="registerform.user_name.$dirty && registerform.user_name.$error.minlength">Please enter minimum 3 characters</span>
+				<span class="error" ng-show="registerform.user_name.$dirty && registerform.user_name.$error.maxlength">Maximum 50 characters permitted.</span>
+				<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <div><label class="control-label pad-top-8" for="emp_id">Employee ID</label></div>
+			  <div>
+			  	<input id="emp_id" name="emp_id" type="text" placeholder="Employee ID" class="form-control input-md" ng-model="register.emp_id" ng-minlength="8" ng-maxlength="8" required/>
+			  	<!--start of validation-->
+				<span class="error" ng-show="registerform.emp_id.$dirty && registerform.emp_id.$error.required">Required!</span>
+				<span class="error" ng-show="registerform.emp_id.$dirty && (registerform.emp_id.$error.minlength || registerform.emp_id.$error.maxlength)">Please enter your eight digit employee ID</span>
+				<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Password input-->
+			<div class="">
+			  <div><label class="control-label pad-top-8" for="emp_password">Password</label></div>
+			  <div>
+			    <input id="emp_password" name="emp_password" type="password" placeholder="Password" class="form-control input-md" ng-model="register.emp_password" ng-minlength="4" ng-maxlength="8" required/>
+			    <!--start of validation-->
+				<span class="error" ng-show="registerform.emp_password.$dirty && registerform.emp_password.$error.required">Required!</span>
+				<span class="error" ng-show="registerform.emp_password.$dirty && (registerform.emp_password.$error.minlength || registerform.emp_password.$error.maxlength)">Password should contain 4 - 8 characters.</span>
+				<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Confirm Password input-->
+			<div>
+			  <div><label class="control-label pad-top-8" for="confirm_passwd">Confirm Password</label></div>
+			  <div>
+			    <input id="confirm_password" name="confirm_password" type="password" placeholder="confirm password" class="form-control input-md" ng-model="register.confirm_password" required />
+			    <!--start of validation-->
+				<span class="error" ng-show="registerform.confirm_password.$dirty && registerform.confirm_password.$error.required">Required!</span>
+				<span class="error" ng-show="registerform.confirm_password.$dirty && (register.emp_password != register.confirm_password)">Passwords do not match.</span>
+				<!--end of validation-->
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="btn-area register-btn">
+			    <button type="submit" id="registerBtn" name="registerBtn" class="btn btn-md btn-block btn-success" ng-disabled="registerform.$invalid" ng-click="register()">Register</button>
+
+			    <a id="goToLoginBtn" name="goToLoginBtn" class="btn btn-md btn-danger" href="#/login">Cancel</a>
+
+			</div>
+
+			</fieldset>
+		</form>
+	</div>
+</div>

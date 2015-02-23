@@ -1,0 +1,153 @@
+<header class="container hideMobile">
+	<img src="app/images/logo_home.png" class="fltL"/>
+	<div class="user">
+	<span >Welcome, {{username | capitalizeFirst}}</span>
+	<!--<h2 class="col-md-3">Points : {{points}}</h2>-->
+	<button type="" id="logoutBtn" name="logoutBtn" class="btn btn-danger btn-md mgt20 fltR" ng-click="logout()">Logout</button>
+	</div>
+</header>
+<div class="container bg-3 pdT30 pdB30 hideMobile">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="col-md-12">
+				<h1 class="mainbrand"> Tomorrow's Matches </h1>
+				<div id="" class="grey-background mgT50px pdT30 pdB30 curvedBox transparent" ng-repeat="match in matches">
+					<div class="col-md-12">
+						<label ng-show="match.betSaved">Your vote for {{match.bet}} has been successfully saved.</label>
+				  		<label ng-show="match.betFailed">Your vote for {{match.bet}} could not be saved at the moment. Please try again later.</label>
+				  	</div>
+					<div class="row">
+						<div class="col-md-4">
+							<button id="team-A" name="team-A" class="btn btn-md btn-block btn-bet fnt-bold" ng-click="bet($event, match, match.matchid, match.teama)">Vote for {{match.teama | replaceQuotes | teamName}}</button>
+						</div>
+						<div class="col-md-4 col-md-offset-3">
+							<button id="team-B" name="team-B" class="btn btn-md btn-block btn-bet fnt-bold" ng-click="bet($event, match, match.matchid, match.teamb)">Vote for {{match.teamb | replaceQuotes | teamName}}</button>
+						</div>
+					</div>
+	                <div class="row match">
+	                    <div class="col-sm-5">
+	                        <img class="flag" src="app/images/icons/{{match.teama | replaceQuotes}}.png" />
+	                        <span class="center-block"><b>{{match.teama | replaceQuotes | teamName}}</b></span>
+	                    </div>
+	                    <div class="col-sm-2 vs">
+	                        <span class="white-text"> v/s </span>
+	                    </div>
+	                    <div class="col-sm-5">
+	                        <img class="flag" src="app/images/icons/{{match.teamb | replaceQuotes}}.png" />
+	                        <span class="center-block"><b>{{match.teamb | replaceQuotes | teamName}}</b></span>
+	                    </div>
+	                </div>
+	                <div class="row match_info white-text">
+	                    <span><b>{{match.venue | replaceQuotes}}</b></span><br>
+	                    <span>{{match.datefield | replaceQuotes | amDateFormat:'MMM DD, YYYY'}}</span><br>
+	                    <!-- &nbsp at &nbsp {{match.datefield | amDateFormat:'h:mm:ss a'}} -->
+	                </div>
+            	</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-12 bet-points dashed-bottom-border">
+				<h2 class="brand">Total Score : <span class="fltR">{{points}} points</span></h2>
+			</div>
+			<div class="col-md-12 bet-points">
+				<h2 class="brand">Most Bet Points Won</h2>
+				<table>
+					<tr ng-repeat="leader in leaders">
+						<td class="col-md-6">{{leader.username}}</td>
+						<td class="col-md-2">{{leader.pts}} points</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="col-md-12 bet-points mgT50px">
+				<h2 class="brand">Upcoming Matches</h2>
+				<table>
+					<tr ng-repeat="match in upcomingMatches">
+						<td class="col-md-12 smallText white-text"><a href="http://www.google.com/search?q={{match.teama | replaceQuotes | teamName}}%20vs%20{{match.teamb | replaceQuotes | teamName}}" target="blank" class="white-text">{{match.teama | replaceQuotes | teamName}} plays {{match.teamb | replaceQuotes | teamName}} at {{match.venue}} on {{match.datefield | replaceQuotes | amDateFormat:'MMM DD, YYYY'}}</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+<header class="container hideDesktop">
+	<div class="col-xs-12 pdR0 pdL0">
+		<img src="app/images/logo_home.png" class="fltL col-xs-5 pdL0"/>
+		<div class="pdL0 pdR0 mgT15 welcomeText white-text">
+			<button type="" id="mobileLogout" name="logoutBtn" class="fltR btn btn-danger glyphicon glyphicon-off fltR" ng-click="logout()"></button>
+			<span class="fltR pdR10" >Welcome, {{username | capitalizeFirst}}</span>
+		</div>
+		<div class="pdL0 pdR0 mgT40 mgR50 pointsDivMobile white-text">
+			<span class="fltR white-text">My Score : {{points}} points</span>
+		</div>
+	</div>
+	
+	
+</header>
+<div class="container bg-3 pdT30 pdB30 hideDesktop">
+	<div class="row">
+		 <ul class="nav nav-tabs">
+		    <li ng-class="{ active: isSet(1)}"><a href="javascript:void(0)" ng-click="setTab(1)" class="white-text"><span class="glyphicon glyphicon-heart pdR5"></span>Bet</a></li>
+		    <li ng-class="{ active: isSet(2)}"><a href="javascript:void(0)" ng-click="setTab(2)" class="white-text"><span class=" glyphicon glyphicon-list-alt pdR5"></span>Leaderboard</a></li>
+		    <li ng-class="{ active: isSet(3)}"><a href="javascript:void(0)" ng-click="setTab(3)" class="white-text"><span class=" glyphicon glyphicon-transfer pdR5"></span>Upcoming</a></li>
+		  </ul>
+	</div>
+	<div ng-show="isSet(1)" class="tab-pane row fade in" id="betsMobile">
+		<div class="col-xs-12">
+			<span class="white-text row"> Tomorrow's Matches </span>
+			<div id="" class="grey-background mgT15 pdT30 pdB30 curvedBox transparent" ng-repeat="match in matches">
+				<div class="col-md-12 smallText white-text">
+					<label ng-show="match.betSaved">Your vote for {{match.bet}} has been successfully saved.</label>
+			  		<label ng-show="match.betFailed">Your vote for {{match.bet}} could not be saved at the moment. Please try again later.</label>
+		  		</div>
+		  		<div class="row match_info white-text smallText">
+                	<label class="transparentText"><b>Tap the team logo to place your votes.</b></label>
+            	</div>
+				<div class="row match_info white-text">
+                    <span><b>{{match.venue | replaceQuotes}}</b></span><br>
+                    <span>{{match.datefield | replaceQuotes | amDateFormat:'MMM DD, YYYY'}}</span><br>
+                </div>
+                <div class="row match">
+                    <div class="col-sm-5">
+                        <img class="flag voteImg" src="app/images/icons/{{match.teama | replaceQuotes}}.png" ng-click="bet($event, match, match.matchid, match.teama)"/>
+                        <span class="center-block" ng-click="bet($event, match, match.matchid, match.teama)"><b>{{match.teama | replaceQuotes | teamName}}</b></span>
+                    </div>
+                    <div class="col-sm-2 vs">
+                        <span class="white-text"> v/s </span>
+                    </div>
+                    <div class="col-sm-5">
+                        <img class="flag voteImg" src="app/images/icons/{{match.teamb | replaceQuotes}}.png" ng-click="bet($event, match, match.matchid, match.teamb)" />
+                        <span class="center-block" ng-click="bet($event, match, match.matchid, match.teamb)"><b>{{match.teamb | replaceQuotes | teamName}}</b></span>
+                    </div>
+                </div>
+        	</div>
+		</div>
+	</div>
+	<div ng-show="isSet(2)" class="tab-pane row fade in" id="leaderboardMobile">
+		<div class="col-xs-12 bet-points mgT15">
+			<span class="fltR white-text">My Score : {{points}} points</span>
+		</div>
+
+		<div class="col-xs-12 bet-points mgT15">
+			<h2 class="brand col-xs-12">Most Bet Points Won</h2>
+			<div class="col-xs-12 customTableRow  mgT15" ng-repeat="leader in leaders">
+				<span class="col-xs-8 customTableCell">{{leader.username}}</span>
+				<span class="col-xs-4 customTableCell">{{leader.pts}} points</span>
+			</div>
+		</div>
+	</div>
+	<div ng-show="isSet(3)" class="tab-pane row fade in" id="upcomingMatchesMobile">
+		<div class="col-md-12 bet-points mgT15">
+			<h2 class="brand">Upcoming Matches</h2>
+			<table>
+				<tr ng-repeat="match in upcomingMatches">
+					<td class="col-md-12 smallText white-text"><a href="http://www.google.com/search?q={{match.teama | replaceQuotes | teamName}}%20vs%20{{match.teamb | replaceQuotes | teamName}}" target="blank" class="white-text">{{match.teama | replaceQuotes | teamName}} plays {{match.teamb | replaceQuotes | teamName}} at {{match.venue}} on {{match.datefield | replaceQuotes | amDateFormat:'MMM DD, YYYY'}}</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

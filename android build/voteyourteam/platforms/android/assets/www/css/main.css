@@ -1,0 +1,308 @@
+body {
+	background-color: #000;
+}
+header {
+	background: #000;
+	height: 150px;
+	text-align: center;
+}
+header .page_info {
+    color: #fff;
+    font-size: 30px;
+    position: relative;
+    right: 50px;
+    top: 70px;
+}
+header h2 {
+    color: #FFBF00;
+    margin: 0;
+    position: relative;
+    top: 30px;
+}
+header a {
+    color: #000;
+    background: #FFBF00;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 25px;
+    position: relative;
+    top: 25px;
+}
+header a:hover {
+    background: #FFF;
+    text-decoration: none;
+}
+.pdT30 {
+	padding-top:30px;
+}
+.pdB30 {
+    padding-bottom:30px;
+}
+.mgT50px{
+    margin-top: 50px;
+}
+.mgT35{
+    margin-top: 35px;
+}
+.mgT40{
+    margin-top: 40px;
+}
+.mgR50{
+    margin-right: 50px;
+}
+.curvedBox{
+    border-radius: 10px;
+}
+.fltR{
+    float: right;
+}
+.fltL{
+    float: left;
+}
+.mgR15{
+    margin-right: 15px;
+}
+.world-cup-img {
+    left: 100px;
+    position: absolute;
+    top: 50px;
+}
+/* Angular related */
+
+/*.ng-invalid .ng-dirty {
+    border: 1px solid red;
+}*/
+
+.error {
+    color: red !important;
+    display: inline;
+    padding: 10px 0 0 0;
+    font-size: 12px;
+}
+/* home page*/
+#box1 {
+    background-color: #a9a9a9;
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 20px 0 20px 0;
+}
+.match {
+    margin: 20px 0 20px 0px;
+}
+.match > div {
+    text-align: center;
+}
+.match .center-block {
+    margin: 20px 0 0 15px;
+    font-size: 25px;
+    color: #ED7812;
+}
+.vs {
+    margin-top: 50px;
+    font-size: xx-large;
+    color: #041844;
+}
+.flag {
+    border-radius: 50%;
+    height: 180px;
+    width: 180px;
+    margin-left: 10px;
+}
+.match_info {
+    text-align: center;
+    color: #041844;
+    font-size: 16px;
+}
+.btn-bet {
+    background: #ffbf00;
+    color: black;
+    margin-left: 20px;
+}
+#team-A {
+    margin-left: 45px;
+}
+.btn-bet:hover {
+    background: #ED7812;
+    color: black;
+}
+
+/*carousel*/
+.carousel {
+    margin-bottom: 50px;
+}
+.carousel h2 {
+    color: #ffbf00;
+    margin: 30px 0 20px 0;
+    text-align: center;
+}
+h2.brand {
+    color: #fff;
+    margin: 0 0 5px 0;
+    font-size: 20px;
+}
+h1.mainbrand{ color: #fff;
+    margin: 0 0 5px 0;
+    font-size: 30px;
+}
+.fnt-bold{font-weight: bold;}
+table {
+    background: #a9a9a9;
+    margin: 25px 0 0 0;
+}
+table, th, td {
+    border: 1px solid #a9a9a9;
+}
+td, th {
+    text-align: center;
+    font-size: 16px;
+    color: #041844;}
+h2.upcoming {
+    color: #fff;
+    margin: 50px 0 20px 0;
+    font-size: 20px;
+}
+.pad-top-8{
+    padding-top: 8px;
+}
+.mgt20{
+    margin-top: 20px;
+}
+.grey-background{
+    background: #0C090A;
+}
+.from-container{
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    width:300px;
+    float:right;
+}
+.bg{background: url(../img/icc.jpg) no-repeat 50% 50%; margin-top: 80px}
+.bg-2{background: url(../img/icc.jpg) no-repeat 50% 50%;}
+.bg-3{background: url(../img/icc-wallpaper.png) no-repeat 50% 50%;}
+.p-bottom20{padding-bottom: 20px}
+.from-container h1, .from-container label{color: #fff;}
+.btn-area{margin-top: 25px}
+.btn-area button, .btn-orange{background: #FFA500; color:#fff; font-weight: bold}
+.register{border-top:1px dotted #ccc; padding: 5px 0; margin-top: 10px;}
+.register span, .register a{display: block; text-align: center;}
+.register a{font-size:22px; color:#357EC7;}
+.register-btn{}
+.register-btn button, .register-btn a{width: 48%; display: inline-block;}
+.register-btn a{margin-left: 5px;}
+.user{float:right;}
+.user span{display: inline-block; margin: 25px 20px 0 0; color: #fff}
+
+.bet-points{}
+.bet-points table{background: none; border:none;}
+.bet-points table tr, .bet-points table td{color:#fff; text-align: left}
+.bet-points table td{border-bottom:1px dotted #ccc !important; padding: 5px; border:none;}
+.dashed-bottom-border{
+    border-bottom: 1px dotted #ccc !important;
+    margin-bottom: 50px;
+}
+.white-text, .white-text:hover, .white-text:visited,  .white-text:focus{
+    color: #FFFFFF;
+}
+.smallText{
+    font-size: 14px;
+}
+.mediumText{
+    font-size: 18px;
+}
+.transparent {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=90);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+}
+
+.pdR0{
+    padding-right: 0px;
+}
+.pdR5{
+    padding-right: 5px;
+}
+
+.pdL0{
+    padding-left: 0px;
+}
+
+.pdR10{
+    padding-right: 10px;
+}
+
+.mgT15{
+    margin-top: 15px;
+}
+.mg-10{
+    margin-top: -10px;
+}
+.transparentText{
+    opacity: 0.3;
+}
+
+
+.voteImg{
+    padding: 5px;
+    background: rgba(252,234,187,1);
+    background: -moz-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(252,234,187,1)), color-stop(51%, rgba(248,181,0,1)), color-stop(68%, rgba(252,205,77,1)), color-stop(100%, rgba(251,223,147,1)));
+    background: -webkit-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -o-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: -ms-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    background: linear-gradient(to right, rgba(252,234,187,1) 0%, rgba(248,181,0,1) 51%, rgba(252,205,77,1) 68%, rgba(251,223,147,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93', GradientType=1 );
+    cursor: pointer;
+}
+
+.customTableRow{
+    color: #fff;
+    text-align: left;
+}
+
+.customTableCell{
+     -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-bottom: 1px dotted #ccc !important;
+    border-image: none;
+    border-left: medium none;
+    border-right: medium none;
+    border-top: medium none;
+    padding: 5px;
+}
+
+
+@media (max-device-width : 700px) {
+/* Styles */
+    .hideMobile{
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .welcomeText{
+        position: absolute;
+        right: 0px;
+    }
+
+    .bg-3{
+        background: url(../img/icc-wallpaper.png);
+    }
+    header{
+        max-height: 100px;
+    }
+    .infoMsg{
+        position: absolute;
+        top: 20px;
+    }
+}
+
+@media (min-width: 700px) {
+    .hideDesktop{
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
